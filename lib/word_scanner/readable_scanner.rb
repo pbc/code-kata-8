@@ -19,6 +19,7 @@ module WordScanner
     
     def scan(dictionary)
       process_dictionary(dictionary)
+
       result = []
       potential_results.each do |target_word|
         composite_words = find_composite_words(target_word)
@@ -26,6 +27,9 @@ module WordScanner
           result << target_word
         end
       end
+
+      reset_dictionary_data
+      
       result
     end
 
