@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe WordScanner::ReadableScanner do
+describe WordScanners::ReadableScanner do
   context "looking for six letter words which are composed of two concatenated smaller words" do
     context "when required words can be found" do
       let(:dictionary) {

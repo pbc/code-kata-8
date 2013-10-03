@@ -1,4 +1,4 @@
-module WordScanner
+module WordScanners
   class ReadableScanner
     def initialize
       @matching_word_length = 6
