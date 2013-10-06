@@ -2,21 +2,8 @@ module WordScanners
   class ReadableScanner
     def initialize
       @matching_word_length = 6
-      reset_dictionary_data
     end
 
-    def process_dictionary(dictionary)
-      reset_dictionary_data
-
-      dictionary.each do |word|
-        if word.length == matching_word_length
-          potential_results << word
-        elsif word.length < matching_word_length
-          partial_words << word
-        end
-      end
-    end
-    
     def scan(dictionary)
       process_dictionary(dictionary)
 
@@ -36,16 +23,38 @@ module WordScanners
     private
 
     attr_reader :matching_word_length
-    attr_reader :partial_words
-    attr_reader :potential_results
 
+    def reset_dictionary_data
+      @partial_words = []
+      @potential_results = []
+    end
+
+    def partial_words
+      @partial_words ||= []
+    end
+
+    def potential_results
+      @potential_results ||= []
+    end
+
+    def process_dictionary(dictionary)
+      reset_dictionary_data
+
+      dictionary.each do |word|
+        if word.length == matching_word_length
+          potential_results << word
+        elsif word.length < matching_word_length
+          partial_words << word
+        end
+      end
+    end
+    
     def find_composite_words(target_word)
       results = []
       matching_word_length.times do |idx|
         splitted_word = split_word_in_two(target_word, idx)
 
         if both_words_are_valid_partials?(splitted_word)
-          puts splitted_word.inspect
           results << [splitted_word[0], splitted_word[1]]
         end
       end
@@ -70,11 +79,6 @@ module WordScanners
 
     def is_partial_word?(word)
       partial_words.include? word
-    end
-
-    def reset_dictionary_data
-      @partial_words = []
-      @potential_results = []
     end
 
   end

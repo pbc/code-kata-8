@@ -1,7 +1,7 @@
 module WordScanners
-  class FastScanner
-    def initialize
-      @matching_word_length = 6      
+  class ScanningEngine
+    def initialize(options)
+      @matching_word_length = options[:matching_word_length]
     end
 
     def scan(dictionary)
