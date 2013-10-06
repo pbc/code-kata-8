@@ -11,7 +11,7 @@ module WordScanners
       potential_results.each do |target_word|
         composite_words = find_composite_words(target_word)
         if composite_words.length > 0
-          result << target_word
+          result += composite_words
         end
       end
 
@@ -47,6 +47,9 @@ module WordScanners
           partial_words << word
         end
       end
+
+      potential_results.uniq!
+      partial_words.uniq!
     end
     
     def find_composite_words(target_word)
@@ -55,7 +58,7 @@ module WordScanners
         splitted_word = split_word_in_two(target_word, idx)
 
         if both_words_are_valid_partials?(splitted_word)
-          results << [splitted_word[0], splitted_word[1]]
+          results << [splitted_word[0], splitted_word[1], target_word]
         end
       end
       results

@@ -1,26 +1,20 @@
 module WordScanners
   class ExtendibleScanner
-    def initialize(scanner_options)
-      @scanner_options = scanner_options
+    def initialize(scanning_engine)
+      @scanning_engine = scanning_engine
     end
-    
-    def scan(dictionary)
-      create_scanning_engine.scan(dictionary)
+
+    def scan(dictionary, post_processors = [])
+      result  = scanning_engine.scan(dictionary)
+      post_processors.each do |processor|
+        result = processor.process(result)
+      end
+      result
     end
 
     private
 
-    attr_reader :scanner_options
-
-    def prepare_engine_options
-      {
-        matching_word_length: scanner_options[:matching_word_length]
-      }
-    end
-
-    def create_scanning_engine
-      ::WordScanners::ScanningEngine.new(prepare_engine_options)
-    end
+    attr_reader :scanning_engine
 
   end
 end
