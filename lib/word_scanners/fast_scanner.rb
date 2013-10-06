@@ -45,7 +45,6 @@ module WordScanners
         splitted_word = split_word_in_two(target_word, idx)
 
         if both_words_are_valid_partials?(splitted_word)
-          puts splitted_word.inspect
           results << [splitted_word[0], splitted_word[1]]
         end
       end
@@ -73,8 +72,8 @@ module WordScanners
     end
 
     def reset_dictionary_data
-      @partial_words = []
-      @potential_results = []
+      @partial_words = Set.new
+      @potential_results = Set.new
     end
 
   end
